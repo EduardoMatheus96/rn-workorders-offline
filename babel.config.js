@@ -1,6 +1,6 @@
 module.exports = {
   presets: [
-    ['babel-preset-react-native', { unstable_transformImportMeta: true }],
+    ['@react-native/babel-preset', { unstable_transformImportMeta: true }],
     'nativewind/babel',
   ],
 };
