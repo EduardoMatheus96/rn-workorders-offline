@@ -245,3 +245,9 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Realm files
+*.realm
+*.realm.lock
+*.realm.management/
+*.realm.note
