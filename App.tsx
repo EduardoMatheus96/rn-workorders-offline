@@ -6,6 +6,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { SyncMeta } from './src/database/schemas/SyncMetaSchema';
 import { WorkOrder } from './src/database/schemas/WorkOrderSchema';
+import { NavigationContainer } from '@react-navigation/native';
+import { RootNavigator } from './src/navigation/RootNavigator';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -16,7 +18,10 @@ function App() {
     schemaVersion={1}
   >
     <SafeAreaProvider>
-        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+        <NavigationContainer>
+            <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+            <RootNavigator />
+        </NavigationContainer>
     </SafeAreaProvider>
   </RealmProvider>
   );
