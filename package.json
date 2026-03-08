@@ -7,7 +7,7 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest",
+    "test": "jest --forceExit",
     "prepare": "husky"
   },
   "dependencies": {
@@ -22,6 +22,7 @@
     "react-native": "0.84.1",
     "react-native-safe-area-context": "^5.7.0",
     "react-native-screens": "^4.24.0",
+    "react-native-uuid": "^2.0.3",
     "realm": "^20.2.0",
     "tailwindcss": "^3.4.19",
     "zustand": "^5.0.11"
