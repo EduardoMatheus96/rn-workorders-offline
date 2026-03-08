@@ -56,7 +56,7 @@ export function useWorkOrderRepository() {
                 const order = realm.objectForPrimaryKey(WorkOrder, id);
                 if (order) {
                     order.deleted = true;
-                    order.updatedAt = new Date().toISOString();
+                    order.deletedAt = new Date().toISOString();
                     order._isPendingSync = true;
                     order._pendingOperation = 'delete';
                 }
