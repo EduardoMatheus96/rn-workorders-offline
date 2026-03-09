@@ -43,25 +43,26 @@ export async function pushLocalChanges(realm: Realm) {
 }
 
 export async function syncFromServer(since: string, realm: Realm) {
-    const { data } = await api.get(`/work-orders/sync?since=${since}`);
+    const isEpoch = since === new Date(0).toISOString();
+
+    let created: any[] = [];
+    let updated: any[] = [];
+    let deleted: any[] = [];
+
+    if (isEpoch) {
+        const { data } = await api.get('/work-orders');
+        created = Array.isArray(data) ? data : [];
+    } else {
+        const { data } = await api.get('/work-orders/sync', {
+            params: { since },
+        });
+        created = data.created ?? [];
+        updated = data.updated ?? [];
+        deleted = data.deleted ?? [];
+    }
 
     realm.write(() => {
-        data.created?.forEach((item: any) => {
-            realm.create(WorkOrder, {
-                _id: String(item.id),
-                title: item.title,
-                description: item.description,
-                status: item.status,
-                assignedTo: item.assignedTo,
-                createdAt: item.createdAt,
-                updatedAt: item.updatedAt,
-                completed: item.completed,
-                deleted: false,
-                _isPendingSync: false,
-            }, Realm.UpdateMode.Modified);
-        });
-
-        data.updated?.forEach((item: any) => {
+        [...created, ...updated].forEach((item: any) => {
             const local = realm.objectForPrimaryKey(WorkOrder, String(item.id));
             if (!local || new Date(item.updatedAt) > new Date(local.updatedAt)) {
                 realm.create(WorkOrder, {
@@ -79,7 +80,7 @@ export async function syncFromServer(since: string, realm: Realm) {
             }
         });
 
-        data.deleted?.forEach((item: any) => {
+        deleted.forEach((item: any) => {
             const order = realm.objectForPrimaryKey(WorkOrder, String(item));
             if (order) {
                 order.deleted = true;
