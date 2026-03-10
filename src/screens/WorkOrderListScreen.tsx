@@ -11,10 +11,10 @@ import { useQuery } from '@realm/react';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Feather';
-import { WorkOrder } from '../database/schemas/WorkOrderSchema';
-import { WorkOrderCard } from '../components/WorkOrderCard';
-import { SyncStatusBar } from '../components/SyncStatusBar';
-import { RootStackParamList } from '../navigation/types';
+import { WorkOrder } from '../realm/schemas/WorkOrderSchema';
+import { WorkOrderCard } from '../atoms/work-orders/WorkOrderCard';
+import { SyncStatusBar } from '../atoms/work-orders/SyncStatusBar';
+import { RootStackParamList } from '../routes/types';
 import { useSyncManager } from '../hooks/useSyncManager';
 import { SafeAreaView } from 'react-native-safe-area-context';
 

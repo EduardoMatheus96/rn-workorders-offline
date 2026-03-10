@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSyncStore } from '../../store/syncStore';
+import { useSyncStore } from '../../../stores/syncStore';
 import { Text, View } from 'react-native';
 
 export function SyncStatusBar() {

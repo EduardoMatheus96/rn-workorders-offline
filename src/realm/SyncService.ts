@@ -1,6 +1,6 @@
 import Realm from 'realm';
 import { api }  from '../services/api';
-import { WorkOrder } from '../database/schemas/WorkOrderSchema';
+import { WorkOrder } from './schemas/WorkOrderSchema';
 
 function mapToDTO(order: WorkOrder){
     return {

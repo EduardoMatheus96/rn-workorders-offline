@@ -5,9 +5,9 @@ import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Feather';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { WorkOrder } from '../database/schemas/WorkOrderSchema';
-import { StatusBadge } from '../components/StatusBadge';
-import { RootStackParamList } from '../navigation/types';
+import { WorkOrder } from '../realm/schemas/WorkOrderSchema';
+import { StatusBadge } from '../atoms/work-orders/StatusBadge';
+import { RootStackParamList } from '../routes/types';
 
 type DetailRouteProp = RouteProp<RootStackParamList, 'WorkOrderDetail'>;
 type NavigationProp = StackNavigationProp<RootStackParamList, 'WorkOrderDetail'>;

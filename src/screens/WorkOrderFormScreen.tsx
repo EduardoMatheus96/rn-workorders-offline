@@ -17,9 +17,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useObject, useRealm } from '@realm/react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import uuid from 'react-native-uuid';
-import { WorkOrder } from '../database/schemas/WorkOrderSchema';
-import { RootStackParamList } from '../navigation/types';
-import { WorkOrderFormData, workOrderSchema } from '../schemas/workOrderSchema';
+import { WorkOrder } from '../realm/schemas/WorkOrderSchema';
+import { RootStackParamList } from '../routes/types';
+import { WorkOrderFormData, workOrderSchema } from '../types/workOrderSchema';
 
 type FormRouteProp = RouteProp<RootStackParamList, 'WorkOrderForm'>;
 type NavigationProp = StackNavigationProp<RootStackParamList, 'WorkOrderForm'>;

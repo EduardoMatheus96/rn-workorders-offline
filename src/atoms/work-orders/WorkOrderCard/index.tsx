@@ -1,5 +1,5 @@
 import React from 'react';
-import { WorkOrder } from '../../database/schemas/WorkOrderSchema';
+import { WorkOrder } from '../../../realm/schemas/WorkOrderSchema';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { StatusBadge } from '../StatusBadge';
 import Icon from 'react-native-vector-icons/Feather';
