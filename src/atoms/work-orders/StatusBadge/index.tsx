@@ -1,22 +1,21 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import { WorkOrderStatus } from '../../../types/workOrder';
 
-type Status = 'Pending' | 'In Progress' | 'Completed';
-
-const STATUS_STYLES: Record<Status, string> = {
+const STATUS_STYLES: Record<WorkOrderStatus, string> = {
     'Pending': 'bg-[#F59E0B]',
     'In Progress': 'bg-[#3B82F6]',
     'Completed': 'bg-[#10B981]',
 };
 
-const STATUS_LABELS: Record<Status, string> = {
+const STATUS_LABELS: Record<WorkOrderStatus, string> = {
     'Pending': 'Pendente',
     'In Progress': 'Em Andamento',
     'Completed': 'Concluído',
 };
 
 interface StatusBadgeProps {
-    status: Status;
+    status: WorkOrderStatus;
 };
 
 export function StatusBadge({ status }: StatusBadgeProps) {

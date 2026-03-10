@@ -1,4 +1,11 @@
 import { z } from 'zod';
+import { WorkOrderStatus } from './workOrder';
+
+const STATUS_VALUES = [
+    'Pending',
+    'In Progress',
+    'Completed',
+] as const satisfies readonly WorkOrderStatus[];
 
 export const workOrderSchema = z.object({
     title: z
@@ -9,7 +16,7 @@ export const workOrderSchema = z.object({
     description: z
         .string()
         .max(500, 'Descrição deve ter no máximo 500 caracteres'),
-    status: z.enum(['Pending', 'In Progress', 'Completed'], {
+    status: z.enum(STATUS_VALUES, {
         errorMap: () => ({ message: 'Status é obrigatório' }),
     }),
     assignedTo: z
