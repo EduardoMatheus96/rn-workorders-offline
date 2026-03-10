@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { WorkOrder } from '../database/schemas/WorkOrderSchema';
+import { WorkOrder } from '../realm/schemas/WorkOrderSchema';
 
 interface WorkOrderStore {
     selectedOrder: WorkOrder | null;

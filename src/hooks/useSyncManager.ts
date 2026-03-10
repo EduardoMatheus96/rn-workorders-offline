@@ -1,12 +1,12 @@
 import NetInfo from '@react-native-community/netinfo';
 import { useEffect } from 'react';
 import { useRealm } from '@realm/react';
-import { pushLocalChanges, syncFromServer } from '../sync/SyncService';
+import { pushLocalChanges, syncFromServer } from '../realm/SyncService';
 import {
   getLastSyncedAt,
   setLastSyncedAt,
-} from '../database/SyncMetaRepository';
-import { useSyncStore } from '../store/syncStore';
+} from '../realm/SyncMetaRepository';
+import { useSyncStore } from '../stores/syncStore';
 
 export function useSyncManager() {
   const realm = useRealm();
