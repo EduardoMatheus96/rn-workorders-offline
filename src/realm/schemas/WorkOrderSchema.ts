@@ -1,10 +1,11 @@
 import Realm from 'realm';
+import { PendingOperation, WorkOrderStatus } from '../../types/workOrder';
 
 export class WorkOrder extends Realm.Object<WorkOrder> {
     _id!: string;
     title!: string;
     description!: string;
-    status!: 'Pending' | 'In Progress' | 'Completed';
+    status!: WorkOrderStatus;
     assignedTo!: string;
     createdAt!: string;
     updatedAt!: string;
@@ -13,7 +14,7 @@ export class WorkOrder extends Realm.Object<WorkOrder> {
     deleted!: boolean;
 
     _isPendingSync!: boolean;
-    _pendingOperation?: 'create' | 'update' | 'delete';
+    _pendingOperation?: PendingOperation;
 
     static schema: Realm.ObjectSchema = {
         name: 'WorkOrder',

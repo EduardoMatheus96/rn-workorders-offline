@@ -3,22 +3,12 @@ import { WorkOrder } from '../../../realm/schemas/WorkOrderSchema';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { StatusBadge } from '../StatusBadge';
 import Icon from 'react-native-vector-icons/Feather';
+import { formatDateShort } from '../../../utils/formatDate';
 
 interface WorkOrderCardProps {
     order: WorkOrder;
     onPress: () => void;
 }
-
-function formatDate(isoString: string): string {
-    try {
-        return new Date(isoString).toLocaleDateString('pt-BR', {
-            day: '2-digit',
-            month: '2-digit',
-        });
-    } catch {
-        return '';   
-    }
-} 
 
 export function WorkOrderCard({ order, onPress }: WorkOrderCardProps) {
     return (
@@ -57,7 +47,7 @@ export function WorkOrderCard({ order, onPress }: WorkOrderCardProps) {
                 <View className="flex-row items-center gap-1 shrink-0">
                     <Icon name="calendar" size={12} color="#9CA3AF"/>
                     <Text className="text-xs text-gray-500">
-                        {formatDate(order.createdAt)}
+                        {formatDateShort(order.createdAt)}
                     </Text>
                 </View>
             </View>
