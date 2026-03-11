@@ -12,4 +12,10 @@ export const colors = {
     red400: '#F87171',
     red500: '#EF4444',
     white: '#FFFFFF', 
+    inmetaOrange: '#E65124',
+    inmetaGreenDark: '#1E4737',
+    inmetaGreenMid: '#254D3E',
+    inmetaGreenBorder: '#2D5C4A',
+    inmetaGreenAccent: '#4BC586',
+    inmetaGreenText: '#9ECFBB',
 } as const;
