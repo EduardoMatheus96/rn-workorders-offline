@@ -28,7 +28,12 @@
     "updatedAt": "Updated At",
     "pendingSync": "Pending sync",
     "notFound": "Order not found",
-    "editOrder": "Edit work order"
+    "editOrder": "Edit work order",
+    "deleteOrder": "Delete work order",
+    "deleteConfirmTitle": "Delete order",
+    "deleteConfirmMessage": "Are you sure you want to delete this work order?",
+    "deleteConfirmCancel": "Cancel",
+    "deleteConfirmOk": "Delete"
   },
   "workOrderForm": {
     "titleNew": "New Work Order",
@@ -46,6 +51,11 @@
       "create": "Create Order",
       "edit": "Save Changes"
     }
+  },
+  "workOrderCard": {
+    "pendingSync": "pending sync",
+    "assignedTo": "assigned to",
+    "createdAt": "created on"
   },
   "validation": {
     "titleRequired": "Title is required",

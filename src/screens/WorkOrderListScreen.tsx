@@ -88,6 +88,8 @@ export function WorkOrderListScreen() {
                 className={`flex-row items-center gap-1.5 px-4 py-3 border-b-2 ${
                   isActive ? TAB_ACTIVE_COLOR[tab] : 'border-transparent'
                 }`}
+                accessibilityRole="tab"
+                accessibilityState={{ selected: isActive }}
               >
                 <Text
                   className={`text-sm font-medium whitespace-nowrap ${

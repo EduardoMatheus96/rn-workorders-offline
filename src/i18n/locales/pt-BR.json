@@ -28,7 +28,12 @@
     "updatedAt": "Atualizado em",
     "pendingSync": "Pendente sync",
     "notFound": "Ordem não encontrada",
-    "editOrder": "Editar ordem de serviço"
+    "editOrder": "Editar ordem de serviço",
+    "deleteOrder": "Excluir ordem de serviço",
+    "deleteConfirmTitle": "Excluir ordem",
+    "deleteConfirmMessage": "Tem certeza que deseja excluir esta ordem de serviço?",
+    "deleteConfirmCancel": "Cancelar",
+    "deleteConfirmOk": "Excluir"
   },
   "workOrderForm": {
     "titleNew": "Nova Ordem",
@@ -46,6 +51,11 @@
       "create": "Criar Ordem",
       "edit": "Salvar Alterações"
     }
+  },
+  "workOrderCard": {
+    "pendingSync": "pendente sincronização",
+    "assignedTo": "responsável",
+    "createdAt": "criado em"
   },
   "validation": {
     "titleRequired": "Título é obrigatório",
