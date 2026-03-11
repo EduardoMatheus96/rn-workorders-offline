@@ -1,4 +1,5 @@
 import './global.css';
+import './src/i18n';
 
 import { RealmProvider } from '@realm/react'; 
 import { StatusBar, StyleSheet, useColorScheme } from 'react-native';
