@@ -21,6 +21,7 @@ import { WorkOrder } from '../realm/schemas/WorkOrderSchema';
 import { RootStackParamList } from '../routes/types';
 import { WorkOrderFormData, workOrderSchema } from '../types/workOrderSchema';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../hooks/useTheme';
 
 type FormRouteProp = RouteProp<RootStackParamList, 'WorkOrderForm'>;
 type NavigationProp = StackNavigationProp<RootStackParamList, 'WorkOrderForm'>;
@@ -37,6 +38,7 @@ export function WorkOrderFormScreen() {
     const realm = useRealm();
     const { id } = route.params ?? {};
     const { t } = useTranslation();
+    const { isDark } = useTheme();
     const STATUS_OPTIONS = getStatusOptions(t);
 
     const existingOrder = useObject(WorkOrder, id ?? '');
@@ -101,8 +103,10 @@ export function WorkOrderFormScreen() {
         navigation.goBack();
     };
 
+    const placeholderColor = isDark ? '#9ECFBB' : '#9CA3AF';
+
     return (
-        <SafeAreaView className="flex-1 bg-gray-50" edges={['bottom']}>
+        <SafeAreaView className="flex-1 bg-gray-50 dark:bg-inmeta-greenDark" edges={['bottom']}>
             <KeyboardAvoidingView
                 className="flex-1"
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
@@ -112,7 +116,7 @@ export function WorkOrderFormScreen() {
                     keyboardShouldPersistTaps="handled">
 
                     <View className="mb-4">
-                        <Text className="text-sm font-semibold text-gray-700 mb-1.5">
+                        <Text className="text-sm font-semibold text-gray-700 dark:text-inmeta-greenText mb-1.5">
                             {t('workOrderForm.fields.title')}<Text className="text-red-500"> *</Text>
                         </Text>
                         <Controller
@@ -120,11 +124,11 @@ export function WorkOrderFormScreen() {
                             name="title"
                             render={({ field: { onChange, onBlur, value } }) => (
                                 <TextInput
-                                    className={`bg-white border rounded-xl px-4 h-12 text-gray-800 ${
-                                        errors.title ? 'border-red-400' : 'border-gray-200'
+                                    className={`bg-white dark:bg-inmeta-greenMid border rounded-xl px-4 h-12 text-gray-800 dark:text-white ${
+                                        errors.title ? 'border-red-400' : 'border-gray-200 dark:border-inmeta-greenBorder'
                                     }`}
                                     placeholder={t('workOrderForm.fields.titlePlaceholder')}
-                                    placeholderTextColor="#9CA3AF"
+                                    placeholderTextColor={placeholderColor}
                                     value={value}
                                     onChangeText={onChange}
                                     onBlur={onBlur}
@@ -139,17 +143,19 @@ export function WorkOrderFormScreen() {
                     </View>
 
                     <View className="mb-4">
-                        <Text className="text-sm font-semibold text-gray-700 mb-1.5">{t('workOrderForm.fields.description')}</Text>
+                        <Text className="text-sm font-semibold text-gray-700 dark:text-inmeta-greenText mb-1.5">
+                            {t('workOrderForm.fields.description')}
+                        </Text>
                         <Controller
                             control={control}
                             name="description"
                             render={({ field: { onChange, onBlur, value } }) => (
                                 <TextInput
-                                    className={`bg-white border rounded-xl px-4 py-3 text-gray-800 ${
-                                        errors.description ? 'border-red-400' : 'border-gray-200'
+                                    className={`bg-white dark:bg-inmeta-greenMid border rounded-xl px-4 py-3 text-gray-800 dark:text-white ${
+                                        errors.description ? 'border-red-400' : 'border-gray-200 dark:border-inmeta-greenBorder'
                                     }`}
                                     placeholder={t('workOrderForm.fields.descriptionPlaceholder')}
-                                    placeholderTextColor="#9CA3AF"
+                                    placeholderTextColor={placeholderColor}
                                     value={value}
                                     onChangeText={onChange}
                                     onBlur={onBlur}
@@ -167,7 +173,7 @@ export function WorkOrderFormScreen() {
                     </View>
 
                     <View className="mb-4">
-                        <Text className="text-sm font-semibold text-gray-700 mb-1.5">
+                        <Text className="text-sm font-semibold text-gray-700 dark:text-inmeta-greenText mb-1.5">
                             {t('workOrderForm.fields.status')}<Text className="text-red-500"> *</Text>
                         </Text>
                         <Controller
@@ -181,12 +187,12 @@ export function WorkOrderFormScreen() {
                                             onPress={() => onChange(option.value)}
                                             className={`flex-1 h-10 rounded-xl items-center justify-center border ${
                                                 value === option.value
-                                                    ? 'bg-blue-600 border-blue-600'
-                                                    : 'bg-white border-gray-200'
+                                                    ? 'bg-inmeta-orange border-inmeta-orange'
+                                                    : 'bg-white dark:bg-inmeta-greenMid border-gray-200 dark:border-inmeta-greenBorder'
                                             }`}>
                                             <Text
                                                 className={`text-xs font-semibold ${
-                                                    value === option.value ? 'text-white' : 'text-gray-500'
+                                                    value === option.value ? 'text-white' : 'text-gray-500 dark:text-inmeta-greenText'
                                                 }`}>
                                                 {option.label}
                                             </Text>
@@ -198,7 +204,7 @@ export function WorkOrderFormScreen() {
                     </View>
 
                     <View className="mb-8">
-                        <Text className="text-sm font-semibold text-gray-700 mb-1.5">
+                        <Text className="text-sm font-semibold text-gray-700 dark:text-inmeta-greenText mb-1.5">
                             {t('workOrderForm.fields.assignedTo')}<Text className="text-red-500"> *</Text>
                         </Text>
                         <Controller
@@ -206,11 +212,11 @@ export function WorkOrderFormScreen() {
                             name="assignedTo"
                             render={({ field: { onChange, onBlur, value } }) => (
                                 <TextInput
-                                    className={`bg-white border rounded-xl px-4 h-12 text-gray-800 ${
-                                        errors.assignedTo ? 'border-red-400' : 'border-gray-200'
+                                    className={`bg-white dark:bg-inmeta-greenMid border rounded-xl px-4 h-12 text-gray-800 dark:text-white ${
+                                        errors.assignedTo ? 'border-red-400' : 'border-gray-200 dark:border-inmeta-greenBorder'
                                     }`}
                                     placeholder={t('workOrderForm.fields.assignedToPlaceholder')}
-                                    placeholderTextColor="#9CA3AF"
+                                    placeholderTextColor={placeholderColor}
                                     value={value}
                                     onChangeText={onChange}
                                     onBlur={onBlur}
@@ -227,9 +233,8 @@ export function WorkOrderFormScreen() {
                     <TouchableOpacity
                         onPress={handleSubmit(onSubmit)}
                         disabled={isSubmitting}
-                        className="bg-blue-600 h-14 rounded-2xl items-center justify-center"
-                        accessibilityState={{ disabled: isSubmitting }}
-                        >
+                        className="bg-inmeta-orange h-14 rounded-2xl items-center justify-center"
+                        accessibilityState={{ disabled: isSubmitting }}>
                         {isSubmitting ? (
                             <ActivityIndicator color="#fff" />
                         ) : (

@@ -18,6 +18,7 @@ import { SyncStatusBar } from '../atoms/work-orders/SyncStatusBar';
 import { RootStackParamList } from '../routes/types';
 import { useSyncManager } from '../hooks/useSyncManager';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTheme } from '../hooks/useTheme';
 
 
 type NavigationProp = StackNavigationProp<RootStackParamList, 'WorkOrderList'>;
@@ -44,6 +45,7 @@ export function WorkOrderListScreen() {
   const { t } = useTranslation();
   const navigation = useNavigation<NavigationProp>();
   const [activeFilter, setActiveFilter] = useState<FilterTab>('All');
+  const { iconColor } = useTheme();
 
   useSyncManager();
 
@@ -70,10 +72,10 @@ export function WorkOrderListScreen() {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1 bg-gray-50 dark:bg-inmeta-greenDark">
       <SyncStatusBar />
 
-      <View className="bg-white border-b border-gray-100">
+      <View className="bg-white dark:bg-inmeta-greenMid border-b border-gray-100 dark:border-inmeta-greenBorder">
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -93,19 +95,19 @@ export function WorkOrderListScreen() {
               >
                 <Text
                   className={`text-sm font-medium whitespace-nowrap ${
-                    isActive ? TAB_ACTIVE_TEXT[tab] : 'text-gray-400'
+                    isActive ? TAB_ACTIVE_TEXT[tab] : 'text-gray-400 dark:text-inmeta-greenText'
                   }`}
                 >
                   {t(`workOrderList.tabs.${tab}`)}
                 </Text>
                 <View
                   className={`min-w-[20px] h-5 px-1.5 rounded-full items-center justify-center ${
-                    isActive ? 'bg-gray-100' : 'bg-gray-100'
+                    isActive ? 'bg-gray-100 dark:bg-inmeta-greenMid' : 'bg-gray-100 dark:bg-inmeta-greenMid'
                   }`}
                 >
                   <Text
                     className={`text-xs font-semibold ${
-                      isActive ? TAB_ACTIVE_TEXT[tab] : 'text-gray-400'
+                      isActive ? TAB_ACTIVE_TEXT[tab] : 'text-gray-400 dark:text-inmeta-greenText'
                     }`}
                   >
                     {counts[tab]}
@@ -131,8 +133,8 @@ export function WorkOrderListScreen() {
         contentContainerStyle={styles.listContent}
         ListEmptyComponent={
           <View className="flex-1 items-center justify-center mt-24">
-            <Icon name="clipboard" size={48} color="#D1D5DB" />
-            <Text className="text-gray-400 text-sm mt-3">
+            <Icon name="clipboard" size={48} color={iconColor.muted} />
+            <Text className="text-gray-400 dark:text-inmeta-greenText text-sm mt-3">
               {t('workOrderList.emptyState')}
             </Text>
           </View>
@@ -141,7 +143,7 @@ export function WorkOrderListScreen() {
 
       <TouchableOpacity
         onPress={() => navigation.navigate('WorkOrderForm', {})}
-        className="absolute bottom-6 right-5 w-14 h-14 rounded-full bg-blue-600 items-center justify-center shadow-lg"
+        className="absolute bottom-6 right-5 w-14 h-14 rounded-full bg-inmeta-orange items-center justify-center shadow-lg"
         accessibilityLabel={t('workOrderList.newOrder')}
       >
         <Icon name="plus" size={28} color="#FFFFFF" />

@@ -18,23 +18,20 @@ import { StatusBadge } from '../atoms/work-orders/StatusBadge';
 import { RootStackParamList } from '../routes/types';
 import { formatDateFull } from '../utils/formatDate';
 import { InfoRow } from '../atoms/work-orders/InfoRow';
+import { useTheme } from '../hooks/useTheme';
 
 type DetailRouteProp = RouteProp<RootStackParamList, 'WorkOrderDetail'>;
-type NavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'WorkOrderDetail'
->;
+type NavigationProp = StackNavigationProp<RootStackParamList, 'WorkOrderDetail'>;
 
 export function WorkOrderDetailScreen() {
   const route = useRoute<DetailRouteProp>();
   const navigation = useNavigation<NavigationProp>();
   const { id } = route.params;
+  const { t } = useTranslation();
+  const { iconColor } = useTheme();
+  const realm = useRealm();
 
   const order = useObject(WorkOrder, id);
-
-  const { t } = useTranslation();
-
-  const realm = useRealm();
 
   const handleDelete = () => {
     Alert.alert(
@@ -63,9 +60,9 @@ export function WorkOrderDetailScreen() {
 
   if (!order) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center">
-        <Icon name="alert-circle" size={48} color="#D1D5DB" />
-        <Text className="text-gray-400 text-sm mt-3">
+      <SafeAreaView className="flex-1 bg-gray-50 dark:bg-inmeta-greenDark items-center justify-center">
+        <Icon name="alert-circle" size={48} color={iconColor.muted} />
+        <Text className="text-gray-400 dark:text-inmeta-greenText text-sm mt-3">
           {t('workOrderDetail.notFound')}
         </Text>
       </SafeAreaView>
@@ -73,29 +70,29 @@ export function WorkOrderDetailScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1 bg-gray-50 dark:bg-inmeta-greenDark">
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View className="bg-white rounded-2xl border border-gray-100 p-4 mb-4">
+        <View className="bg-white dark:bg-inmeta-greenMid rounded-2xl border border-gray-100 dark:border-inmeta-greenBorder p-4 mb-4">
           <View className="flex-row items-center justify-between mb-3">
             <StatusBadge status={order.status} />
             {order._isPendingSync && (
               <View className="flex-row items-center gap-1">
-                <Icon name="cloud-off" size={12} color="#9CA3AF" />
-                <Text className="text-xs text-gray-400">
+                <Icon name="cloud-off" size={12} color={iconColor.muted} />
+                <Text className="text-xs text-gray-400 dark:text-inmeta-greenText">
                   {t('workOrderDetail.pendingSync')}
                 </Text>
               </View>
             )}
           </View>
-          <Text className="text-lg font-bold text-gray-900 mb-2">
+          <Text className="text-lg font-bold text-gray-900 dark:text-white mb-2">
             {order.title}
           </Text>
-          <Text className="text-sm text-gray-500 leading-relaxed">
+          <Text className="text-sm text-gray-500 dark:text-inmeta-greenText leading-relaxed">
             {order.description}
           </Text>
         </View>
 
-        <View className="bg-white rounded-2xl border border-gray-100 px-4 mb-4">
+        <View className="bg-white dark:bg-inmeta-greenMid rounded-2xl border border-gray-100 dark:border-inmeta-greenBorder px-4 mb-4">
           <InfoRow
             icon="user"
             label={t('workOrderDetail.assignedTo')}
@@ -124,7 +121,7 @@ export function WorkOrderDetailScreen() {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => navigation.navigate('WorkOrderForm', { id: order._id })}
-        className="absolute bottom-6 right-5 w-14 h-14 rounded-full bg-blue-600 items-center justify-center shadow-lg"
+        className="absolute bottom-6 right-5 w-14 h-14 rounded-full bg-inmeta-orange items-center justify-center shadow-lg"
         accessibilityLabel={t('workOrderDetail.editOrder')}
       >
         <Icon name="edit-2" size={22} color="#FFFFFF" />
