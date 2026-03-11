@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { WorkOrderStatus } from './workOrder';
+import i18n from '../i18n';
 
 const STATUS_VALUES = [
     'Pending',
@@ -10,20 +11,20 @@ const STATUS_VALUES = [
 export const workOrderSchema = z.object({
     title: z
         .string()
-        .min(1, 'Título é obrigatório')
-        .min(3, 'Título deve ter pelo menos 3 caracteres')
-        .max(100, 'Título deve ter no máximo 100 caracteres'),
+        .min(1, i18n.t('validation.titleRequired'))
+        .min(3, i18n.t('validation.titleMin3'))
+        .max(100, i18n.t('validation.titleMax100')),
     description: z
         .string()
-        .max(500, 'Descrição deve ter no máximo 500 caracteres'),
+        .max(500, i18n.t('validation.descriptionMax500')),
     status: z.enum(STATUS_VALUES, {
-        errorMap: () => ({ message: 'Status é obrigatório' }),
+        errorMap: () => ({ message: i18n.t('validation.statusRequired') }),
     }),
     assignedTo: z
         .string()
-        .min(1, 'Responsável é obrigatório')
-        .min(2, 'Nome deve ter pelo menos 2 caracteres')
-        .max(50, 'Nome deve ter no máximo 50 caracteres'),
+        .min(1, i18n.t('validation.assignedToRequired'))
+        .min(2, i18n.t('validation.nameMin2'))
+        .max(50, i18n.t('validation.nameMax50')),
 });
 
 export type WorkOrderFormData = z.infer<typeof workOrderSchema>;

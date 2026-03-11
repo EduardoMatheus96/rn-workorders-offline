@@ -1,0 +1,60 @@
+{
+  "status": {
+    "Pending": "Pending",
+    "In Progress": "In Progress",
+    "Completed": "Completed"
+  },
+  "sync": {
+    "syncing": "Syncing...",
+    "connected": "Connected - all orders synced",
+    "pendingCount": "{{count}} pending sync(s)",
+    "offline": "Offline"
+  },
+  "workOrderList": {
+    "title": "Work Orders",
+    "emptyState": "No work orders found",
+    "newOrder": "New work order",
+    "tabs": {
+      "All": "All",
+      "Pending": "Pending",
+      "In Progress": "In Progress",
+      "Completed": "Completed"
+    }
+  },
+  "workOrderDetail": {
+    "title": "Details",
+    "assignedTo": "Assigned To",
+    "createdAt": "Created At",
+    "updatedAt": "Updated At",
+    "pendingSync": "Pending sync",
+    "notFound": "Order not found",
+    "editOrder": "Edit work order"
+  },
+  "workOrderForm": {
+    "titleNew": "New Work Order",
+    "titleEdit": "Edit Work Order",
+    "fields": {
+      "title": "Title",
+      "titlePlaceholder": "Ex: Preventive maintenance...",
+      "description": "Description",
+      "descriptionPlaceholder": "Describe the order details...",
+      "status": "Status",
+      "assignedTo": "Assigned To",
+      "assignedToPlaceholder": "Responsible name..."
+    },
+    "submit": {
+      "create": "Create Order",
+      "edit": "Save Changes"
+    }
+  },
+  "validation": {
+    "titleRequired": "Title is required",
+    "titleMin3": "Title must be at least 3 characters",
+    "titleMax100": "Title must be at most 100 characters",
+    "descriptionMax500": "Description must be at most 500 characters",
+    "statusRequired": "Status is required",
+    "assignedToRequired": "Assigned To is required",
+    "nameMin2": "Name must be at least 2 characters",
+    "nameMax50": "Name must be at most 50 characters"
+  }
+}

@@ -20,14 +20,15 @@ import uuid from 'react-native-uuid';
 import { WorkOrder } from '../realm/schemas/WorkOrderSchema';
 import { RootStackParamList } from '../routes/types';
 import { WorkOrderFormData, workOrderSchema } from '../types/workOrderSchema';
+import { useTranslation } from 'react-i18next';
 
 type FormRouteProp = RouteProp<RootStackParamList, 'WorkOrderForm'>;
 type NavigationProp = StackNavigationProp<RootStackParamList, 'WorkOrderForm'>;
 
-const STATUS_OPTIONS: { label: string; value: WorkOrderFormData['status'] }[] = [
-    { label: 'Pendente', value: 'Pending' },
-    { label: 'Em Andamento', value: 'In Progress' },
-    { label: 'Concluído', value: 'Completed' },
+const getStatusOptions = (t: (key: string) => string) => [
+    { label: t('status.Pending'), value: 'Pending' as WorkOrderFormData['status'] },
+    { label: t('status.In Progress'), value: 'In Progress' as WorkOrderFormData['status'] },
+    { label: t('status.Completed'), value: 'Completed' as WorkOrderFormData['status'] },
 ];
 
 export function WorkOrderFormScreen() {
@@ -35,6 +36,8 @@ export function WorkOrderFormScreen() {
     const navigation = useNavigation<NavigationProp>();
     const realm = useRealm();
     const { id } = route.params ?? {};
+    const { t } = useTranslation();
+    const STATUS_OPTIONS = getStatusOptions(t);
 
     const existingOrder = useObject(WorkOrder, id ?? '');
     const isEditMode = !!id && !!existingOrder;
@@ -108,10 +111,9 @@ export function WorkOrderFormScreen() {
                     contentContainerStyle={styles.scrollContent}
                     keyboardShouldPersistTaps="handled">
 
-                    {/* Título */}
                     <View className="mb-4">
                         <Text className="text-sm font-semibold text-gray-700 mb-1.5">
-                            Título <Text className="text-red-500">*</Text>
+                            {t('workOrderForm.fields.title')}<Text className="text-red-500"> *</Text>
                         </Text>
                         <Controller
                             control={control}
@@ -121,7 +123,7 @@ export function WorkOrderFormScreen() {
                                     className={`bg-white border rounded-xl px-4 h-12 text-gray-800 ${
                                         errors.title ? 'border-red-400' : 'border-gray-200'
                                     }`}
-                                    placeholder="Ex: Manutenção preventiva..."
+                                    placeholder={t('workOrderForm.fields.titlePlaceholder')}
                                     placeholderTextColor="#9CA3AF"
                                     value={value}
                                     onChangeText={onChange}
@@ -135,9 +137,8 @@ export function WorkOrderFormScreen() {
                         )}
                     </View>
 
-                    {/* Descrição */}
                     <View className="mb-4">
-                        <Text className="text-sm font-semibold text-gray-700 mb-1.5">Descrição</Text>
+                        <Text className="text-sm font-semibold text-gray-700 mb-1.5">{t('workOrderForm.fields.description')}</Text>
                         <Controller
                             control={control}
                             name="description"
@@ -146,7 +147,7 @@ export function WorkOrderFormScreen() {
                                     className={`bg-white border rounded-xl px-4 py-3 text-gray-800 ${
                                         errors.description ? 'border-red-400' : 'border-gray-200'
                                     }`}
-                                    placeholder="Descreva os detalhes da ordem..."
+                                    placeholder={t('workOrderForm.fields.descriptionPlaceholder')}
                                     placeholderTextColor="#9CA3AF"
                                     value={value}
                                     onChangeText={onChange}
@@ -163,10 +164,9 @@ export function WorkOrderFormScreen() {
                         )}
                     </View>
 
-                    {/* Status */}
                     <View className="mb-4">
                         <Text className="text-sm font-semibold text-gray-700 mb-1.5">
-                            Status <Text className="text-red-500">*</Text>
+                            {t('workOrderForm.fields.status')}<Text className="text-red-500"> *</Text>
                         </Text>
                         <Controller
                             control={control}
@@ -195,10 +195,9 @@ export function WorkOrderFormScreen() {
                         />
                     </View>
 
-                    {/* Responsável */}
                     <View className="mb-8">
                         <Text className="text-sm font-semibold text-gray-700 mb-1.5">
-                            Responsável <Text className="text-red-500">*</Text>
+                            {t('workOrderForm.fields.assignedTo')}<Text className="text-red-500"> *</Text>
                         </Text>
                         <Controller
                             control={control}
@@ -208,7 +207,7 @@ export function WorkOrderFormScreen() {
                                     className={`bg-white border rounded-xl px-4 h-12 text-gray-800 ${
                                         errors.assignedTo ? 'border-red-400' : 'border-gray-200'
                                     }`}
-                                    placeholder="Nome do responsável..."
+                                    placeholder={t('workOrderForm.fields.assignedToPlaceholder')}
                                     placeholderTextColor="#9CA3AF"
                                     value={value}
                                     onChangeText={onChange}
@@ -222,7 +221,6 @@ export function WorkOrderFormScreen() {
                         )}
                     </View>
 
-                    {/* Botão de submit */}
                     <TouchableOpacity
                         onPress={handleSubmit(onSubmit)}
                         disabled={isSubmitting}
@@ -231,7 +229,7 @@ export function WorkOrderFormScreen() {
                             <ActivityIndicator color="#fff" />
                         ) : (
                             <Text className="text-white font-bold text-base">
-                                {isEditMode ? 'Salvar Alterações' : 'Criar Ordem'}
+                                {isEditMode ? t('workOrderForm.submit.edit') : t('workOrderForm.submit.create')}
                             </Text>
                         )}
                     </TouchableOpacity>
