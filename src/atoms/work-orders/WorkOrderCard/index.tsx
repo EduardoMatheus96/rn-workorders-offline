@@ -4,6 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { StatusBadge } from '../StatusBadge';
 import Icon from 'react-native-vector-icons/Feather';
 import { formatDateShort } from '../../../utils/formatDate';
+import { useTranslation } from 'react-i18next';
 
 interface WorkOrderCardProps {
     order: WorkOrder;
@@ -11,10 +12,14 @@ interface WorkOrderCardProps {
 }
 
 export function WorkOrderCard({ order, onPress }: WorkOrderCardProps) {
+    const { t } = useTranslation();
+    
     return (
         <TouchableOpacity
             onPress={onPress}
             activeOpacity={0.7}
+            accessibilityRole="button"
+            accessibilityLabel={`${order.title}, ${order.status}${order._isPendingSync ? `, ${t('workOrderCard.pendingSync')}` : ''}, ${t('workOrderCard.assignedTo')} ${order.assignedTo}, ${t('workOrderCard.createdAt')} ${formatDateShort(order.createdAt)}`}
             className="bg-white rounded-2xl border border-gray-100 p-4 mb-3"
         >
             <View className="flex-row items-start justify-between gap-2">

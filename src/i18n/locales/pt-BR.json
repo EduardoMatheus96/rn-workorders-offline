@@ -52,6 +52,11 @@
       "edit": "Salvar Alterações"
     }
   },
+  "workOrderCard": {
+    "pendingSync": "pendente sincronização",
+    "assignedTo": "responsável",
+    "createdAt": "criado em"
+  },
   "validation": {
     "titleRequired": "Título é obrigatório",
     "titleMin3": "Título deve ter pelo menos 3 caracteres",

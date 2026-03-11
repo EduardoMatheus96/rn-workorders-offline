@@ -129,6 +129,7 @@ export function WorkOrderFormScreen() {
                                     onChangeText={onChange}
                                     onBlur={onBlur}
                                     returnKeyType="next"
+                                    accessibilityLabel={t('workOrderForm.fields.title')}
                                 />
                             )}
                         />
@@ -156,6 +157,7 @@ export function WorkOrderFormScreen() {
                                     numberOfLines={4}
                                     textAlignVertical="top"
                                     style={styles.textArea}
+                                    accessibilityLabel={t('workOrderForm.fields.description')}
                                 />
                             )}
                         />
@@ -213,6 +215,7 @@ export function WorkOrderFormScreen() {
                                     onChangeText={onChange}
                                     onBlur={onBlur}
                                     returnKeyType="done"
+                                    accessibilityLabel={t('workOrderForm.fields.assignedTo')}
                                 />
                             )}
                         />
@@ -224,7 +227,9 @@ export function WorkOrderFormScreen() {
                     <TouchableOpacity
                         onPress={handleSubmit(onSubmit)}
                         disabled={isSubmitting}
-                        className="bg-blue-600 h-14 rounded-2xl items-center justify-center">
+                        className="bg-blue-600 h-14 rounded-2xl items-center justify-center"
+                        accessibilityState={{ disabled: isSubmitting }}
+                        >
                         {isSubmitting ? (
                             <ActivityIndicator color="#fff" />
                         ) : (
