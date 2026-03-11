@@ -9,12 +9,20 @@ export function SyncStatusBar() {
     const isOnline = networkStatus === 'online';
 
     return (
-        <View 
-        className={`flex-row items-center gap-2 px-4 py-2 ${isOnline ? 'bg-emerald-50' : 'bg-amber-50'}`}
-        accessibilityLiveRegion="polite"
+        <View
+            className={`flex-row items-center gap-2 px-4 py-2 ${
+                isOnline
+                    ? 'bg-emerald-50 dark:bg-inmeta-greenDark'
+                    : 'bg-amber-50 dark:bg-inmeta-greenDark'
+            }`}
+            accessibilityLiveRegion="polite"
         >
-            <View className={`w-2 h-2 rounded-full ${isOnline ? 'bg-emerald-500' : 'bg-amber-500'}`}/>
-            <Text className={`text-xs font-medium flex-1 ${isOnline ? 'text-emerald-700' : 'text-amber-700'}`}>
+            <View className={`w-2 h-2 rounded-full ${isOnline ? 'bg-emerald-500 dark:bg-inmeta-greenAccent' : 'bg-amber-500'}`} />
+            <Text className={`text-xs font-medium flex-1 ${
+                isOnline
+                    ? 'text-emerald-700 dark:text-inmeta-greenAccent'
+                    : 'text-amber-700 dark:text-amber-400'
+            }`}>
                 {isSyncing
                     ? t('sync.syncing')
                     : isOnline
@@ -23,7 +31,9 @@ export function SyncStatusBar() {
                 }
             </Text>
             {!isOnline && (
-                <Text className="text-xs text-amber-600 opacity-70">{t('sync.offline')}</Text>
+                <Text className="text-xs text-amber-600 dark:text-amber-400 opacity-70">
+                    {t('sync.offline')}
+                </Text>
             )}
         </View>
     );
