@@ -1,16 +1,14 @@
 import NetInfo from '@react-native-community/netinfo';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useRealm } from '@realm/react';
 import { pushLocalChanges, syncFromServer } from '../realm/SyncService';
-import {
-  getLastSyncedAt,
-  setLastSyncedAt,
-} from '../realm/SyncMetaRepository';
+import { getLastSyncedAt, setLastSyncedAt } from '../realm/SyncMetaRepository';
 import { useSyncStore } from '../stores/syncStore';
 
 export function useSyncManager() {
   const realm = useRealm();
   const { setSyncing, setLastSync, setNetworkStatus } = useSyncStore();
+  const syncingRef = useRef(false);
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(async state => {
@@ -18,6 +16,8 @@ export function useSyncManager() {
       setNetworkStatus(isOnline ? 'online' : 'offline');
 
       if (isOnline) {
+        if (syncingRef.current) return;
+        syncingRef.current = true;
         setSyncing(true);
         try {
           const lastSync = getLastSyncedAt(realm);
