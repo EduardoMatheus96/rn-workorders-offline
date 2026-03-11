@@ -7,6 +7,7 @@ import { RootStackParamList } from './types';
 import Icon from 'react-native-vector-icons/Feather';
 import { colors } from '../constants/colors';
 import { StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -23,6 +24,7 @@ function BackIcon() {
 }
 
 export function RootNavigator() {
+  const { t } = useTranslation();
   return (
     <Stack.Navigator
       initialRouteName="WorkOrderList"
@@ -33,18 +35,18 @@ export function RootNavigator() {
       <Stack.Screen
         name="WorkOrderList"
         component={WorkOrderListScreen}
-        options={{ title: 'Work Orders' }}
+        options={{ title: t('workOrderList.title') }}
       />
       <Stack.Screen
         name="WorkOrderDetail"
         component={WorkOrderDetailScreen}
-        options={{ title: 'Details' }}
+        options={{ title: t('workOrderDetail.title') }}
       />
       <Stack.Screen
         name="WorkOrderForm"
         component={WorkOrderFormScreen}
         options={({ route }) => ({
-          title: route.params?.id ? 'Edit Work Order' : 'New Work Order',
+          title: route.params?.id ? t('workOrderForm.titleEdit') : t('workOrderForm.titleNew'),
         })}
       />
     </Stack.Navigator>

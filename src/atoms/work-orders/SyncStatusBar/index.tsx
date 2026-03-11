@@ -1,8 +1,10 @@
 import React from 'react';
 import { useSyncStore } from '../../../stores/syncStore';
+import { useTranslation } from 'react-i18next';
 import { Text, View } from 'react-native';
 
 export function SyncStatusBar() {
+    const { t } = useTranslation();
     const { networkStatus, isSyncing, pendingCount } = useSyncStore();
     const isOnline = networkStatus === 'online';
 
@@ -11,14 +13,14 @@ export function SyncStatusBar() {
             <View className={`w-2 h-2 rounded-full ${isOnline ? 'bg-emerald-500' : 'bg-amber-500'}`}/>
             <Text className={`text-xs font-medium flex-1 ${isOnline ? 'text-emerald-700' : 'text-amber-700'}`}>
                 {isSyncing
-                    ? 'Sincronizando...'
+                    ? t('sync.syncing')
                     : isOnline
-                        ? 'Conectado - todas as ordens sincronizadas'
-                        : `${pendingCount} sincronização(ões) pendente(s)`
+                        ? t('sync.connected')
+                        : t('sync.pendingCount', { count: pendingCount })
                 }
             </Text>
             {!isOnline && (
-                <Text className="text-xs text-amber-600 opacity-70">Offline</Text>
+                <Text className="text-xs text-amber-600 opacity-70">{t('sync.offline')}</Text>
             )}
         </View>
     );

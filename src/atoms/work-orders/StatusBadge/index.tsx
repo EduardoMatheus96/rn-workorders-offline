@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { WorkOrderStatus } from '../../../types/workOrder';
 
 const STATUS_STYLES: Record<WorkOrderStatus, string> = {
@@ -8,21 +9,17 @@ const STATUS_STYLES: Record<WorkOrderStatus, string> = {
     'Completed': 'bg-[#10B981]',
 };
 
-const STATUS_LABELS: Record<WorkOrderStatus, string> = {
-    'Pending': 'Pendente',
-    'In Progress': 'Em Andamento',
-    'Completed': 'Concluído',
-};
-
 interface StatusBadgeProps {
     status: WorkOrderStatus;
 };
 
 export function StatusBadge({ status }: StatusBadgeProps) {
+    const { t } = useTranslation();
+
     return (
         <View className={`px-2.5 py-0.5 rounded-full ${STATUS_STYLES[status]}`}>
             <Text className="text-white text-xs font-semibold tracking-wide">
-                {STATUS_LABELS[status]}
+                {t(`status.${status}`)}
             </Text>
         </View>
     );

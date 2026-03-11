@@ -5,6 +5,7 @@ import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Feather';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 import { WorkOrder } from '../realm/schemas/WorkOrderSchema';
 import { StatusBadge } from '../atoms/work-orders/StatusBadge';
 import { RootStackParamList } from '../routes/types';
@@ -20,12 +21,14 @@ export function WorkOrderDetailScreen() {
     const { id } = route.params;
 
     const order = useObject(WorkOrder, id);
+    
+    const { t } = useTranslation();
 
     if (!order) {
         return (
             <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center">
                 <Icon name="alert-circle" size={48} color="#D1D5DB"/>
-                <Text className="text-gray-400 text-sm mt-3">Ordem não encontrada</Text>
+                <Text className="text-gray-400 text-sm mt-3">{t('workOrderDetail.notFound')}</Text>
             </SafeAreaView>
         );
     }
@@ -40,7 +43,7 @@ export function WorkOrderDetailScreen() {
                         {order._isPendingSync && (
                             <View className="flex-row items-center gap-1">
                                 <Icon name="cloud-off" size={12} color="#9CA3AF"/>
-                                <Text className="text-xs text-gray-400">Pendente sync</Text>
+                                <Text className="text-xs text-gray-400">{t('workOrderDetail.pendingSync')}</Text>
                             </View>
                         )}
                     </View>
@@ -49,17 +52,17 @@ export function WorkOrderDetailScreen() {
                 </View>
 
                 <View className="bg-white rounded-2xl border border-gray-100 px-4 mb-4">
-                    <InfoRow icon="user" label="Responsável" value={order.assignedTo}/>
-                    <InfoRow icon="calendar" label="Criado em" value={formatDateFull(order.createdAt)}/>
-                    <InfoRow icon="refresh-cw" label="Atualizado em" value={formatDateFull(order.updatedAt)}/>
-                    <InfoRow icon="hash" label="ID" value={order._id}/>
+                    <InfoRow icon="user" label={t('workOrderDetail.assignedTo')} value={order.assignedTo}/>
+                    <InfoRow icon="calendar" label={t('workOrderDetail.createdAt')} value={formatDateFull(order.createdAt)}/>
+                    <InfoRow icon="refresh-cw" label={t('workOrderDetail.updatedAt')} value={formatDateFull(order.updatedAt)}/>
+                    <InfoRow icon="hash" label="ID" value={order._id} />
                 </View>
             </ScrollView>
 
             <TouchableOpacity 
                 onPress={() => navigation.navigate('WorkOrderForm', { id: order._id })}
                 className="absolute bottom-6 right-5 w-14 h-14 rounded-full bg-blue-600 items-center justify-center shadow-lg"
-                accessibilityLabel="Editar ordem de serviço"
+                accessibilityLabel={t('workOrderDetail.editOrder')}
             >
                 <Icon name="edit-2" size={22} color="#FFFFFF"/>
             </TouchableOpacity>

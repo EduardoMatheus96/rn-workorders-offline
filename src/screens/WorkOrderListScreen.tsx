@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { useQuery } from '@realm/react';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Feather';
 import { WorkOrder } from '../realm/schemas/WorkOrderSchema';
@@ -25,13 +26,6 @@ type FilterTab = 'All' | 'Pending' | 'In Progress' | 'Completed';
 
 const FILTER_TABS: FilterTab[] = ['All', 'Pending', 'In Progress', 'Completed'];
 
-const TAB_LABELS: Record<FilterTab, string> = {
-  All: 'Todas',
-  Pending: 'Pendentes',
-  'In Progress': 'Em Andamento',
-  Completed: 'Concluídas',
-};
-
 const TAB_ACTIVE_COLOR: Record<FilterTab, string> = {
   All: 'border-blue-600',
   Pending: 'border-amber-500',
@@ -47,6 +41,7 @@ const TAB_ACTIVE_TEXT: Record<FilterTab, string> = {
 };
 
 export function WorkOrderListScreen() {
+  const { t } = useTranslation();
   const navigation = useNavigation<NavigationProp>();
   const [activeFilter, setActiveFilter] = useState<FilterTab>('All');
 
@@ -78,7 +73,6 @@ export function WorkOrderListScreen() {
     <SafeAreaView className="flex-1 bg-gray-50">
       <SyncStatusBar />
 
-      {/* Abas de filtro */}
       <View className="bg-white border-b border-gray-100">
         <ScrollView
           horizontal
@@ -100,7 +94,7 @@ export function WorkOrderListScreen() {
                     isActive ? TAB_ACTIVE_TEXT[tab] : 'text-gray-400'
                   }`}
                 >
-                  {TAB_LABELS[tab]}
+                  {t(`workOrderList.tabs.${tab}`)}
                 </Text>
                 <View
                   className={`min-w-[20px] h-5 px-1.5 rounded-full items-center justify-center ${
@@ -121,7 +115,6 @@ export function WorkOrderListScreen() {
         </ScrollView>
       </View>
 
-      {/* Lista */}
       <FlatList
         data={filteredOrders as unknown as WorkOrder[]}
         keyExtractor={item => item._id}
@@ -138,17 +131,16 @@ export function WorkOrderListScreen() {
           <View className="flex-1 items-center justify-center mt-24">
             <Icon name="clipboard" size={48} color="#D1D5DB" />
             <Text className="text-gray-400 text-sm mt-3">
-              Nenhuma ordem de serviço encontrada
+              {t('workOrderList.emptyState')}
             </Text>
           </View>
         }
       />
 
-      {/* FAB */}
       <TouchableOpacity
         onPress={() => navigation.navigate('WorkOrderForm', {})}
         className="absolute bottom-6 right-5 w-14 h-14 rounded-full bg-blue-600 items-center justify-center shadow-lg"
-        accessibilityLabel="Nova ordem de serviço"
+        accessibilityLabel={t('workOrderList.newOrder')}
       >
         <Icon name="plus" size={28} color="#FFFFFF" />
       </TouchableOpacity>
