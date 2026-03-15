@@ -11,7 +11,7 @@
     "offline": "Offline"
   },
   "workOrderList": {
-    "title": "Work Orders",
+    "title": "Ordens de Serviço",
     "emptyState": "Nenhuma ordem de serviço encontrada",
     "newOrder": "Nova ordem de serviço",
     "tabs": {
