@@ -1,88 +1,136 @@
-# rn-workorders-offline
+# FieldSync — Work Orders Offline
 
-Aplicativo React Native para gerenciamento de ordens de serviço com suporte prioritário para modo offline, utilizando Realm.js e Zustand.
-
-Projeto gerado com [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+> Aplicativo React Native para gerenciamento de ordens de serviço com suporte **offline-first**, sincronização automática, internacionalização, dark mode e acessibilidade.
 
 ---
 
-# Getting Started
+## Funcionalidades
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+- **Offline-first**: todas as operações (criar, editar, excluir) funcionam sem conexão com a internet
+- **Sincronização automática**: ao recuperar a conexão, as alterações locais são enviadas ao servidor e novas ordens são baixadas
+- **Dark mode**: alternância manual entre tema claro e escuro com animação suave
+- **Internacionalização (i18n)**: suporte a múltiplos idiomas via i18next com detecção automática do locale do dispositivo
+- **Acessibilidade**: labels, roles e states para leitores de tela (TalkBack/VoiceOver)
+- **Validação de formulários**: campos validados em tempo real com mensagens de erro traduzidas
+- **Splash screen animada**: tela de abertura com logo e animação de fade + spring
 
-## Step 1: Start Metro
+---
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## Pré-requisitos
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- Node.js >= 18
+- JDK 17
+- Android SDK (API 33+) com emulador ou dispositivo físico
+- [Ambiente React Native configurado](https://reactnative.dev/docs/set-up-your-environment)
+
+---
+
+## Instalação e execução
 
 ```sh
-# Using npm
+# 1. Instalar dependências
+npm install
+
+# 2. Iniciar o servidor Metro
 npm start
 
-# OR using Yarn
-yarn start
-```
-
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
+# 3. Em outro terminal, rodar no Android
 npm run android
-
-# OR using Yarn
-yarn android
 ```
 
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+### Gerar APK debug standalone
 
 ```sh
-bundle install
+# Empacotar o bundle JS
+npx react-native bundle --platform android --dev false \
+  --entry-file index.js \
+  --bundle-output android/app/src/main/assets/index.android.bundle \
+  --assets-dest android/app/src/main/res
+
+# Buildar o APK
+cd android && ./gradlew assembleDebug
 ```
 
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-## Step 3: Modify your app
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload:
-
-- **Android**: Press <kbd>R</kbd> twice or select **"Reload"** from the **Dev Menu** via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+O APK gerado estará em `android/app/build/outputs/apk/debug/app-debug.apk`.
 
 ---
 
-# Troubleshooting
+## Arquitetura
 
-If you're having issues, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+### Padrões utilizados
 
-# Learn More
+| Padrão | Aplicação |
+|---|---|
+| **Atomic Design** | Componentes organizados em `atoms/` (WorkOrderCard, StatusBadge, InfoRow, SyncStatusBar) |
+| **Repository Pattern** | `WorkOrderRepository.ts` e `SyncMetaRepository.ts` isolam o acesso ao Realm |
+| **Service Layer** | `SyncService.ts` concentra a lógica de push/pull com a API |
+| **Context + Hook** | `ThemeContext` + `useTheme` para tema global |
 
-- [React Native Website](https://reactnative.dev)
-- [Getting Started](https://reactnative.dev/docs/environment-setup)
-- [Learn the Basics](https://reactnative.dev/docs/getting-started)
-- [Blog](https://reactnative.dev/blog)
-- [`@facebook/react-native`](https://github.com/facebook/react-native)
+### Estrutura de pastas
+
+```
+src/
+├── atoms/work-orders/   # Componentes atômicos reutilizáveis
+├── constants/           # Paleta de cores
+├── context/             # ThemeContext
+├── hooks/               # useSyncManager, useTheme
+├── i18n/                # Traduções (pt-BR, en-US)
+├── realm/
+│   ├── schemas/         # WorkOrderSchema, SyncMetaSchema
+│   ├── WorkOrderRepository.ts
+│   ├── SyncMetaRepository.ts
+│   └── SyncService.ts
+├── routes/              # RootNavigator, tipos de navegação
+├── screens/             # WorkOrderList, WorkOrderDetail, WorkOrderForm, Splash
+├── services/            # Instância Axios (api.ts)
+├── stores/              # Zustand: syncStore, workOrderStore
+├── types/               # Tipos TypeScript globais
+└── utils/               # formatDate
+```
+
+---
+
+## Decisões técnicas
+
+### Realm.js — armazenamento local
+Escolhido pela performance superior em leitura/escrita de coleções grandes comparado ao AsyncStorage e SQLite, pela integração com `@realm/react` (hooks reativos) e pelo suporte nativo a objetos complexos sem necessidade de serialização manual.
+
+### Zustand — estado global
+Preferido ao Redux pela API mínima sem boilerplate. Usado exclusivamente para estado de sincronização (status, lastSync), mantendo o estado de dados no Realm como fonte de verdade.
+
+### React Hook Form + Zod — formulários
+A combinação permite validação em tempo real com performance otimizada (re-renders apenas nos campos alterados) e tipagem completa do schema inferida pelo TypeScript.
+
+### i18next + react-native-localize
+Detecção automática do idioma do dispositivo com fallback para `pt-BR`. Configurado com `initImmediate: false` para evitar tela em branco durante a inicialização síncrona no React Native.
+
+### Soft delete
+Ordens excluídas recebem `deleted: true` e `_pendingOperation: 'delete'` localmente. A exclusão física no servidor e no Realm só ocorre após confirmação da API, evitando perda de dados em caso de falha de rede.
+
+---
+
+## Testes
+
+```sh
+# Rodar todos os testes
+npx jest
+```
+
+Cobertura atual: **30 testes** em 6 suites
+
+| Suite | Testes |
+|---|---|
+| `utils/formatDate` | 4 |
+| `schemas/workOrderSchema` | 9 |
+| `components/StatusBadge` | 4 |
+| `components/WorkOrderCard` | 5 |
+| `sync/SyncService` | 7 |
+| `App` | 1 |
+
+---
+
+## Limitações conhecidas
+
+- A API backend é simulada (mock); a URL base deve ser configurada em `src/services/api.ts`
+- iOS não foi testado neste ciclo de desenvolvimento
+- Conflitos de sincronização (edição simultânea offline em dois dispositivos) não são tratados — o último push vence

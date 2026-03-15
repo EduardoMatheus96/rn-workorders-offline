@@ -3,6 +3,7 @@ module.exports = {
   forceExit: true,
   moduleNameMapper: {
     '\\.css$': '<rootDir>/__mocks__/fileMock.js',
+    '\\.svg$': '<rootDir>/__mocks__/svgMock.js',
     '@react-native-community/netinfo': '<rootDir>/node_modules/@react-native-community/netinfo/jest/netinfo-mock.js',
     'react-native-localize': '<rootDir>/__mocks__/react-native-localize.js',
     'react-native-vector-icons/(.*)': '<rootDir>/__mocks__/react-native-vector-icons/Feather.js',
