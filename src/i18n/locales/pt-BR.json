@@ -1,0 +1,70 @@
+{
+  "status": {
+    "Pending": "Pendente",
+    "In Progress": "Em Andamento",
+    "Completed": "Concluído"
+  },
+  "sync": {
+    "syncing": "Sincronizando...",
+    "connected": "Conectado - todas as ordens sincronizadas",
+    "pendingCount": "{{count}} sincronização(ões) pendente(s)",
+    "offline": "Offline"
+  },
+  "workOrderList": {
+    "title": "Ordens de Serviço",
+    "emptyState": "Nenhuma ordem de serviço encontrada",
+    "newOrder": "Nova ordem de serviço",
+    "tabs": {
+      "All": "Todas",
+      "Pending": "Pendentes",
+      "In Progress": "Em Andamento",
+      "Completed": "Concluídas"
+    }
+  },
+  "workOrderDetail": {
+    "title": "Detalhes",
+    "assignedTo": "Responsável",
+    "createdAt": "Criado em",
+    "updatedAt": "Atualizado em",
+    "pendingSync": "Pendente sync",
+    "notFound": "Ordem não encontrada",
+    "editOrder": "Editar ordem de serviço",
+    "deleteOrder": "Excluir ordem de serviço",
+    "deleteConfirmTitle": "Excluir ordem",
+    "deleteConfirmMessage": "Tem certeza que deseja excluir esta ordem de serviço?",
+    "deleteConfirmCancel": "Cancelar",
+    "deleteConfirmOk": "Excluir"
+  },
+  "workOrderForm": {
+    "titleNew": "Nova Ordem",
+    "titleEdit": "Editar Ordem",
+    "fields": {
+      "title": "Título",
+      "titlePlaceholder": "Ex: Manutenção preventiva...",
+      "description": "Descrição",
+      "descriptionPlaceholder": "Descreva os detalhes da ordem...",
+      "status": "Status",
+      "assignedTo": "Responsável",
+      "assignedToPlaceholder": "Nome do responsável..."
+    },
+    "submit": {
+      "create": "Criar Ordem",
+      "edit": "Salvar Alterações"
+    }
+  },
+  "workOrderCard": {
+    "pendingSync": "pendente sincronização",
+    "assignedTo": "responsável",
+    "createdAt": "criado em"
+  },
+  "validation": {
+    "titleRequired": "Título é obrigatório",
+    "titleMin3": "Título deve ter pelo menos 3 caracteres",
+    "titleMax100": "Título deve ter no máximo 100 caracteres",
+    "descriptionMax500": "Descrição deve ter no máximo 500 caracteres",
+    "statusRequired": "Status é obrigatório",
+    "assignedToRequired": "Responsável é obrigatório",
+    "nameMin2": "Nome deve ter pelo menos 2 caracteres",
+    "nameMax50": "Nome deve ter no máximo 50 caracteres"
+  }
+}
