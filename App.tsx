@@ -11,9 +11,18 @@ import { WorkOrder } from './src/realm/schemas/WorkOrderSchema';
 import { NavigationContainer } from '@react-navigation/native';
 import { RootNavigator } from './src/routes/RootNavigator';
 import { ThemeProvider } from './src/context/ThemeContext';
+import React, { useState } from 'react';
+
+import { SplashScreen } from './src/screens/SplashScreen';
+
 
 function App() {
+  const [showSplash, setShowSplash] = useState(true);
   const isDarkMode = useColorScheme() === 'dark';
+
+  if (showSplash) {
+    return <SplashScreen onFinish={() => setShowSplash(false)} />;
+  }
 
   return (
     <GestureHandlerRootView style={styles.root}>
