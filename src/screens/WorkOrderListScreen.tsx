@@ -17,8 +17,10 @@ import { WorkOrderCard } from '../atoms/work-orders/WorkOrderCard';
 import { SyncStatusBar } from '../atoms/work-orders/SyncStatusBar';
 import { RootStackParamList } from '../routes/types';
 import { useSyncManager } from '../hooks/useSyncManager';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 
 
 type NavigationProp = StackNavigationProp<RootStackParamList, 'WorkOrderList'>;
@@ -46,6 +48,7 @@ export function WorkOrderListScreen() {
   const navigation = useNavigation<NavigationProp>();
   const [activeFilter, setActiveFilter] = useState<FilterTab>('All');
   const { iconColor } = useTheme();
+  const insets = useSafeAreaInsets();
 
   useSyncManager();
 
@@ -143,7 +146,8 @@ export function WorkOrderListScreen() {
 
       <TouchableOpacity
         onPress={() => navigation.navigate('WorkOrderForm', {})}
-        className="absolute bottom-6 right-5 w-14 h-14 rounded-full bg-inmeta-orange items-center justify-center shadow-lg"
+        className="absolute right-5 w-14 h-14 rounded-full bg-inmeta-orange items-center justify-center shadow-lg"
+        style={{ bottom: 24 + insets.bottom }}
         accessibilityLabel={t('workOrderList.newOrder')}
       >
         <Icon name="plus" size={28} color="#FFFFFF" />
