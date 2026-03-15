@@ -94,6 +94,8 @@ out
 # ===== React Native / Metro =====
 *.jsbundle
 .metro-health-check*
+android/app/src/main/assets/index.android.bundle
+android/app/src/main/res/raw/
 
 # ===== Fastlane =====
 **/fastlane/report.xml
