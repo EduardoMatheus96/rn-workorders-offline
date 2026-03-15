@@ -11,7 +11,6 @@ import { useObject, useRealm } from '@realm/react';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Feather';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { WorkOrder } from '../realm/schemas/WorkOrderSchema';
 import { StatusBadge } from '../atoms/work-orders/StatusBadge';
@@ -19,6 +18,9 @@ import { RootStackParamList } from '../routes/types';
 import { formatDateFull } from '../utils/formatDate';
 import { InfoRow } from '../atoms/work-orders/InfoRow';
 import { useTheme } from '../hooks/useTheme';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 
 type DetailRouteProp = RouteProp<RootStackParamList, 'WorkOrderDetail'>;
 type NavigationProp = StackNavigationProp<RootStackParamList, 'WorkOrderDetail'>;
@@ -30,6 +32,8 @@ export function WorkOrderDetailScreen() {
   const { t } = useTranslation();
   const { iconColor } = useTheme();
   const realm = useRealm();
+  const insets = useSafeAreaInsets();
+
 
   const order = useObject(WorkOrder, id);
 
@@ -60,7 +64,7 @@ export function WorkOrderDetailScreen() {
 
   if (!order) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-50 dark:bg-inmeta-greenDark items-center justify-center">
+      <SafeAreaView className="flex-1 bg-gray-50 dark:bg-inmeta-greenDark items-center justify-center" style={{ paddingTop: insets.top }}>
         <Icon name="alert-circle" size={48} color={iconColor.muted} />
         <Text className="text-gray-400 dark:text-inmeta-greenText text-sm mt-3">
           {t('workOrderDetail.notFound')}
@@ -70,7 +74,7 @@ export function WorkOrderDetailScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50 dark:bg-inmeta-greenDark">
+    <SafeAreaView className="flex-1 bg-gray-50 dark:bg-inmeta-greenDark" style={{ paddingTop: insets.top }}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View className="bg-white dark:bg-inmeta-greenMid rounded-2xl border border-gray-100 dark:border-inmeta-greenBorder p-4 mb-4">
           <View className="flex-row items-center justify-between mb-3">
@@ -114,15 +118,17 @@ export function WorkOrderDetailScreen() {
 
       <TouchableOpacity
         onPress={handleDelete}
-        className="absolute bottom-6 right-24 w-14 h-14 rounded-full bg-red-500 items-center justify-center shadow-lg"
+        className="absolute right-24 w-14 h-14 rounded-full bg-red-500 items-center justify-center shadow-lg"
         accessibilityLabel={t('workOrderDetail.deleteOrder')}
+        style={{ bottom: 24 + insets.bottom }}
       >
         <Icon name="trash-2" size={22} color="#FFFFFF" />
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => navigation.navigate('WorkOrderForm', { id: order._id })}
-        className="absolute bottom-6 right-5 w-14 h-14 rounded-full bg-inmeta-orange items-center justify-center shadow-lg"
+        className="absolute right-5 w-14 h-14 rounded-full bg-inmeta-orange items-center justify-center shadow-lg"
         accessibilityLabel={t('workOrderDetail.editOrder')}
+        style={{ bottom: 24 + insets.bottom }}
       >
         <Icon name="edit-2" size={22} color="#FFFFFF" />
       </TouchableOpacity>
